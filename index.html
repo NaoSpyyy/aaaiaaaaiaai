@@ -1,0 +1,1387 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SCIENTIFIC ARCHIVE — SCP-458 — SITE-22</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=IBM+Plex+Mono:wght@400;500&family=Libre+Baskerville:wght@400;700&display=swap');
+
+:root {
+    --bg: #10110f;
+    --paper: #dcd9ce;
+    --ink: #171814;
+    --muted: #65665e;
+    --line: #8b8c82;
+    --red: #8e2724;
+    --blue: #374c52;
+    --mono: "DM Mono", monospace;
+    --serif: "Libre Baskerville", Georgia, serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    background:
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px),
+        #10110f;
+    background-size: 32px 32px;
+    color: #d8d7cf;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(255,255,255,.045),
+            transparent 45%
+        );
+}
+
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #30312d;
+    background: rgba(14,15,13,.94);
+    z-index: 100;
+}
+
+.top-left {
+    width: 285px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding-left: 22px;
+    border-right: 1px solid #30312d;
+}
+
+.scp-logo {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: .9;
+}
+
+.scp-title {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #eeeeea;
+}
+
+.scp-subtitle {
+    margin-top: 3px;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: #777871;
+    letter-spacing: 1px;
+}
+
+.top-center {
+    flex: 1;
+    padding-left: 28px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: #686a64;
+    letter-spacing: 1px;
+}
+
+.top-center span {
+    color: #a9aaa3;
+}
+
+.clock {
+    width: 180px;
+    padding-right: 25px;
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: #8b8c85;
+    letter-spacing: 1px;
+}
+
+.archive {
+    position: fixed;
+    top: 62px;
+    left: 0;
+    bottom: 0;
+    width: 285px;
+    padding: 35px 23px;
+    border-right: 1px solid #30312d;
+    background: rgba(13,14,12,.78);
+    z-index: 50;
+}
+
+.archive-label {
+    margin-bottom: 28px;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: #696a64;
+    letter-spacing: 2px;
+}
+
+.archive-file {
+    position: relative;
+    display: block;
+    padding: 14px 12px 15px 15px;
+    margin-bottom: 8px;
+    border-left: 1px solid #393a35;
+    color: #7c7e76;
+    text-decoration: none;
+    transition:
+        color .2s ease,
+        border-color .2s ease,
+        background .2s ease;
+}
+
+.archive-file:hover {
+    color: #d0d0c9;
+    border-left-color: #a72e2e;
+    background: rgba(255,255,255,.018);
+}
+
+.archive-file.active {
+    color: #ecebe5;
+    border-left-color: #a72e2e;
+    background: rgba(255,255,255,.025);
+}
+
+.archive-number {
+    display: block;
+    margin-bottom: 7px;
+    font-family: var(--mono);
+    font-size: 8px;
+    color: #5f605a;
+    letter-spacing: 1px;
+}
+
+.archive-name {
+    font-family: var(--mono);
+    font-size: 10px;
+    line-height: 1.55;
+}
+
+.archive-status {
+    position: absolute;
+    right: 12px;
+    top: 15px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #74766f;
+}
+
+.archive-file.active .archive-status {
+    background: #a72e2e;
+    box-shadow: 0 0 8px rgba(167,46,46,.5);
+}
+
+main {
+    margin-left: 285px;
+    padding-top: 62px;
+    padding-bottom: 100px;
+}
+
+.document {
+    position: relative;
+    width: min(930px, calc(100vw - 350px));
+    margin: 75px auto 140px;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 1100px;
+    overflow: hidden;
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.38),
+        0 2px 8px rgba(0,0,0,.2);
+}
+
+.document::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        repeating-linear-gradient(
+            0deg,
+            transparent 0px,
+            transparent 4px,
+            rgba(0,0,0,.012) 5px
+        );
+    z-index: 10;
+}
+
+.paper-inner {
+    position: relative;
+    padding: 76px 88px 100px;
+    z-index: 2;
+}
+
+.doc-meta {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--muted);
+    margin-bottom: 75px;
+}
+
+.doc-meta-left {
+    line-height: 1.8;
+}
+
+.doc-meta-right {
+    text-align: right;
+    line-height: 1.8;
+}
+
+.document-title {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 400;
+    line-height: 1.12;
+    max-width: 680px;
+    letter-spacing: -.025em;
+}
+
+.document-subtitle {
+    margin-top: 17px;
+    font-family: var(--mono);
+    font-size: 9px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .12em;
+}
+
+.rule {
+    display: flex;
+    align-items: center;
+    margin: 52px 0 58px;
+    gap: 12px;
+}
+
+.rule::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    background: var(--red);
+    flex-shrink: 0;
+}
+
+.rule::after {
+    content: "";
+    height: 1px;
+    background: var(--line);
+    flex: 1;
+}
+
+.metadata {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 60px;
+    margin-bottom: 65px;
+}
+
+.meta-item {
+    border-top: 1px solid var(--line);
+    padding-top: 9px;
+    margin-bottom: 22px;
+}
+
+.meta-label {
+    font-family: var(--mono);
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--muted);
+    margin-bottom: 7px;
+}
+
+.meta-value {
+    font-family: var(--serif);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.content {
+    max-width: 660px;
+}
+
+h2 {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin: 53px 0 17px;
+    color: var(--red);
+}
+
+h2::before {
+    content: "§ ";
+    color: var(--muted);
+}
+
+p {
+    font-family: var(--serif);
+    font-size: 14px;
+    line-height: 1.9;
+    margin: 0 0 17px;
+    text-align: left;
+}
+
+.note {
+    position: relative;
+    margin: 30px 0 32px;
+    padding: 15px 20px 15px 23px;
+    border-left: 2px solid var(--blue);
+    font-family: var(--serif);
+    font-size: 13px;
+    line-height: 1.75;
+    color: #343936;
+    background: rgba(55,76,82,.045);
+}
+
+.note::before {
+    content: "KC / PERSONAL NOTE";
+    display: block;
+    font-family: var(--mono);
+    font-size: 7px;
+    letter-spacing: .12em;
+    color: var(--blue);
+    margin-bottom: 8px;
+}
+
+.cross-reference {
+    margin: 45px -20px;
+    padding: 17px 20px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 9px;
+    line-height: 1.7;
+    color: #55564f;
+}
+
+.cross-reference strong {
+    color: var(--red);
+    font-weight: 500;
+}
+
+.result {
+    margin-top: 65px;
+    border-top: 2px solid var(--ink);
+    padding-top: 14px;
+}
+
+.result-head {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 22px;
+}
+
+.result-row {
+    display: grid;
+    grid-template-columns: 125px 1fr;
+    border-bottom: 1px solid #aaa99e;
+    padding: 10px 0;
+    font-family: var(--serif);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.result-row span:first-child {
+    font-family: var(--mono);
+    font-size: 8px;
+    color: var(--muted);
+}
+
+.signature {
+    margin-top: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    border-top: 1px solid var(--line);
+    padding-top: 12px;
+}
+
+.signature-name {
+    font-family: var(--serif);
+    font-size: 14px;
+}
+
+.signature-meta {
+    font-family: var(--mono);
+    font-size: 8px;
+    color: var(--muted);
+    text-align: right;
+}
+
+.page-number {
+    position: absolute;
+    bottom: 35px;
+    right: 55px;
+    font-family: var(--mono);
+    font-size: 8px;
+    color: #77786f;
+}
+
+.document-separator {
+    width: min(930px, calc(100vw - 350px));
+    margin: -75px auto 0;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    color: #555650;
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 1px;
+}
+
+.document-separator::before,
+.document-separator::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #30312d;
+}
+
+@media (max-width: 900px) {
+    .archive {
+        display: none;
+    }
+
+    .top-left {
+        width: auto;
+        border-right: none;
+    }
+
+    .top-center {
+        display: none;
+    }
+
+    .clock {
+        margin-left: auto;
+    }
+
+    main {
+        margin-left: 0;
+    }
+
+    .document,
+    .document-separator {
+        width: calc(100vw - 34px);
+    }
+
+    .document {
+        margin-top: 40px;
+    }
+}
+
+@media (max-width: 650px) {
+    .paper-inner {
+        padding: 45px 28px 75px;
+    }
+
+    .document-title {
+        font-size: 31px;
+    }
+
+    .metadata {
+        grid-template-columns: 1fr;
+        column-gap: 0;
+    }
+
+    p {
+        font-size: 13px;
+    }
+
+    .result-row {
+        grid-template-columns: 95px 1fr;
+    }
+
+    .doc-meta {
+        display: block;
+    }
+
+    .doc-meta-right {
+        margin-top: 15px;
+        text-align: left;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="top-left">
+        <img
+            src="logo22.png"
+            class="scp-logo"
+            alt="SCP Foundation"
+        >
+
+        <div>
+            <div class="scp-title">
+                SCP FOUNDATION
+            </div>
+
+            <div class="scp-subtitle">
+                SITE-22 · SCIENTIFIC DEPARTMENT
+            </div>
+        </div>
+    </div>
+
+    <div class="top-center">
+        ARCHIVE / SITE-22 / SCIENTIFIC / <span>SCP-458</span>
+    </div>
+
+    <div class="clock" id="clock">
+        --:--:--
+    </div>
+</header>
+
+<aside class="archive">
+    <div class="archive-label">
+        SITE-22 / CASE FILE
+    </div>
+
+    <div
+        class="archive-file active"
+        data-target="relatorio-1"
+        onclick="scrollToDoc('relatorio-1')"
+    >
+        <span class="archive-number">
+            01 / 02
+        </span>
+
+        <span class="archive-name">
+            SCP-458-RELATÓRIO-1-1
+        </span>
+
+        <span class="archive-status"></span>
+    </div>
+
+    <div
+        class="archive-file"
+        data-target="relatorio-2"
+        onclick="scrollToDoc('relatorio-2')"
+    >
+        <span class="archive-number">
+            02 / 02
+        </span>
+
+        <span class="archive-name">
+            SCP-458-LAB-REL-02
+        </span>
+
+        <span class="archive-status"></span>
+    </div>
+</aside>
+
+<main>
+
+<article class="document" id="relatorio-1">
+<div class="paper-inner">
+
+    <div class="doc-meta">
+        <div class="doc-meta-left">
+            SITE-22 / SCIENTIFIC DEPARTMENT<br>
+            INTERNAL RECORD<br>
+            CASE: SCP-458
+        </div>
+
+        <div class="doc-meta-right">
+            SCP-458-RELATÓRIO-1-1<br>
+            REV. 01<br>
+            STATUS: COMPLETED
+        </div>
+    </div>
+
+    <h1 class="document-title">
+        Relatório de Teste<br>
+        — SCP-458
+    </h1>
+
+    <div class="document-subtitle">
+        Registro de teste e avaliação de produção de materiais
+    </div>
+
+    <div class="rule"></div>
+
+    <div class="metadata">
+
+        <div class="meta-item">
+            <div class="meta-label">
+                Pesquisador responsável
+            </div>
+
+            <div class="meta-value">
+                Kade Connors
+            </div>
+        </div>
+
+        <div class="meta-item">
+            <div class="meta-label">
+                Cargo
+            </div>
+
+            <div class="meta-value">
+                Pesquisador Júnior
+            </div>
+        </div>
+
+        <div class="meta-item">
+            <div class="meta-label">
+                Local
+            </div>
+
+            <div class="meta-value">
+                Site-22
+            </div>
+        </div>
+
+        <div class="meta-item">
+            <div class="meta-label">
+                Objetivo
+            </div>
+
+            <div class="meta-value">
+                Investigar se SCP-458 pode produzir materiais reais,
+                incluindo tungstênio e titânio, por meio de pedidos.
+            </div>
+        </div>
+
+    </div>
+
+    <div class="content">
+
+        <h2>Objetivo</h2>
+
+        <p>
+            O objetivo deste teste era investigar se o SCP-458 poderia
+            ser utilizado como uma fonte alternativa de materiais. Caso
+            a anomalia consiga produzir pizzas compostas por metais reais,
+            como tungstênio e titânio, seria possível obter esses materiais
+            simplesmente solicitando uma pizza feita deles, sem depender
+            dos métodos convencionais de extração e processamento.
+        </p>
+
+        <p>
+            A ideia é verificar se o SCP-458 consegue produzir os próprios
+            materiais solicitados, e não apenas imitar sua aparência.
+            Caso o resultado seja confirmado, outros metais de interesse
+            industrial poderão ser testados posteriormente, incluindo
+            materiais de alto valor ou de obtenção mais difícil.
+        </p>
+
+        <p>
+            Para o procedimento, foram designados dois indivíduos Classe-D,
+            responsáveis por realizar os pedidos sob minha supervisão.
+        </p>
+
+        <h2>Procedimento e resultados</h2>
+
+        <p>
+            Inicialmente, os participantes solicitaram algumas pizzas de
+            sabores variados. Um deles decidiu pedir uma pizza de sardinha.
+        </p>
+
+        <p>
+            Não sei o que esperava encontrar ao permitir que os Classe-D
+            escolhessem os próprios sabores, mas certamente não esperava
+            sardinha. Primeira vez tendo a chance de comer uma comida boa
+            em tanto tempo e pedem uma pizza de sardinha.
+        </p>
+
+        <p>
+            Logo depois, o mesmo Classe-D pediu uma pizza de calango.
+            Não vou fingir que entendo o que se passa na cabeça de alguém
+            que olha para uma anomalia capaz de produzir praticamente
+            qualquer pizza e escolhe isso. O SCP-458 atendeu ao pedido
+            normalmente.
+        </p>
+
+        <p>
+            Após alguns pedidos, instruí um dos participantes a solicitar
+            uma pizza dividida entre tungstênio e titânio. O indivíduo
+            esqueceu de mencionar o tungstênio e fez um pedido diferente.
+        </p>
+
+        <p>
+            O SCP-458 produziu uma pizza de ração de cachorro. Interrompi e expliquei novamente quais materiais
+            deveriam ser solicitados. Não era uma algo difícil de fazer.
+        </p>
+
+        <p>
+            Na segunda tentativa, o pedido foi realizado corretamente.
+            O SCP-458 produziu uma pizza inteiramente cinzenta, dividida
+            em duas metades com tonalidades distintas.
+        </p>
+
+        <p>
+            Um dos lados era mais escuro, apresentando uma superfície
+            cinza-escura e uniforme, correspondente ao tungstênio solicitado.
+            O outro era mais claro, com uma tonalidade cinza-prateada,
+            correspondente ao titânio. A diferença entre as metades era
+            perceptível, embora ambas mantivessem uma aparência completamente
+            diferente da de uma pizza convencional.
+        </p>
+
+        <p>
+            Toda a estrutura parecia ser feita dos metais solicitados.
+            A massa e as bordas apresentavam a mesma aparência metálica,
+            assim como a cobertura que normalmente corresponderia ao queijo.
+            Não havia queijo convencional, molho ou qualquer ingrediente
+            alimentar visível, até as partes que deveriam formar a cobertura
+            pareciam compostas pelos mesmos materiais de cada metade.
+        </p>
+
+        <p>
+            A divisão entre o tungstênio e o titânio continuava visível
+            por toda a pizza, inclusive na cobertura. Não se tratava de
+            uma pizza comum com pedaços de metal colocados por cima,
+            visualmente, o objeto inteiro parecia ter sido produzido
+            a partir dos materiais solicitados.
+        </p>
+
+        <p>
+            Um dos Classe-D tentou levantar a pizza e teve dificuldade
+            para movê-la. O peso não foi medido, mas a reação foi perceptível.
+            A dificuldade pode estar relacionada à massa dos materiais
+            solicitados, embora isso não possa ser confirmado apenas
+            pela observação.
+        </p>
+
+        <p>
+            O resultado é relevante para o objetivo do teste. Se o SCP-458
+            realmente produz os metais solicitados, a anomalia poderá
+            funcionar como uma fonte alternativa de materiais, permitindo
+            obter determinadas substâncias por meio de pedidos. Isso poderia
+            reduzir a dependência de processos convencionais de extração,
+            desde que a composição e as propriedades dos produtos fossem
+            confirmadas.
+        </p>
+
+        <p>
+            Durante os pedidos, um dos Classe-D também solicitou um objeto
+            que, ao ser aberto, revelou um material verde brilhante em seu
+            interior. O objeto foi fechado pouco depois, impedindo uma
+            observação mais detalhada. Não consegui identificar o material
+            ou determinar sua composição.
+        </p>
+
+        <p>
+            Em outra ocasião, um dos participantes pediu uma pizza contendo
+            cartões de acesso de Nível 2. A intenção provável era tentar
+            utilizar os cartões para fugir. Não houve tempo para verificar
+            se os objetos produzidos eram funcionais.
+        </p>
+
+        <h2>Encerramento do procedimento</h2>
+
+        <p>
+            Após o pedido dos cartões, solicitei ao guarda responsável
+            que interviesse na situação. Em resposta, ele abriu fogo
+            contra os dois Classe-D, matando ambos.
+        </p>
+
+        <div class="note">
+            Eu pedi que interviesse, não que metralhasse o pessoal.
+        </div>
+
+        <p>
+            O procedimento foi encerrado imediatamente. Com os dois
+            participantes mortos, não foi possível continuar as observações
+            ou verificar os resultados dos últimos pedidos.
+        </p>
+
+        <p>
+            Antes de finalizar, solicitei pessoalmente uma pizza de frango
+            com catupiry. O SCP-458 produziu o pedido normalmente.
+        </p>
+
+        <h2>Conclusão</h2>
+
+        <p>
+            O SCP-458 produziu uma pizza inteiramente metálica, dividida
+            entre uma metade cinza-escura, correspondente ao tungstênio,
+            e outra cinza-prateada, correspondente ao titânio. A massa,
+            as bordas e a cobertura também apresentavam aparência metálica,
+            sem partes visíveis de ingredientes convencionais.
+        </p>
+
+        <p>
+            A composição real ainda não foi confirmada. Caso os materiais
+            sejam autênticos, o SCP-458 poderá representar uma fonte
+            alternativa de metais, justificando testes adicionais com
+            outros materiais de interesse da Fundação.
+        </p>
+
+        <p>
+            As ocorrências envolvendo o material verde e os cartões L2
+            também foram registradas, mas não puderam ser examinadas
+            adequadamente. O teste terminou após a morte dos dois Classe-D
+            pelo guarda responsável.
+        </p>
+
+        <p>
+            Recomendo verificar a composição da pizza metálica antes de
+            prosseguir com testes voltados à obtenção de outros materiais.
+        </p>
+
+        <div class="result">
+
+            <div class="result-head">
+                <span>
+                    TEST RESULT
+                </span>
+
+                <span>
+                    SCP-458-RELATÓRIO-1-1
+                </span>
+            </div>
+
+            <div class="result-row">
+                <span>
+                    RESULTADO
+                </span>
+
+                <span>
+                    Pizza inteiramente metálica produzida em duas metades,
+                    correspondentes aos materiais solicitados.
+                </span>
+            </div>
+
+            <div class="result-row">
+                <span>
+                    OBSERVAÇÕES
+                </span>
+
+                <span>
+                    Material verde brilhante e cartões de acesso L2
+                    observados, sem verificação conclusiva.
+                </span>
+            </div>
+
+            <div class="result-row">
+                <span>
+                    ENCERRAMENTO
+                </span>
+
+                <span>
+                    Procedimento interrompido após a morte dos dois
+                    indivíduos Classe-D.
+                </span>
+            </div>
+
+            <div class="result-row">
+                <span>
+                    PRÓXIMO PASSO
+                </span>
+
+                <span>
+                    Verificar a composição da pizza metálica antes
+                    de testar outros materiais.
+                </span>
+            </div>
+
+        </div>
+
+        <div class="signature">
+            <div class="signature-name">
+                Kade Connors
+            </div>
+
+            <div class="signature-meta">
+                SITE-22 · SCIENTIFIC DEPARTMENT<br>
+                JUNIOR RESEARCHER
+            </div>
+        </div>
+
+    </div>
+
+    <div class="page-number">
+        01 / 02
+    </div>
+
+</div>
+</article>
+
+<div class="document-separator">
+    NEXT DOCUMENT / SAME CASE
+</div>
+
+<article class="document" id="relatorio-2">
+<div class="paper-inner">
+
+    <div class="doc-meta">
+        <div class="doc-meta-left">
+            SITE-22 / SCIENTIFIC DEPARTMENT<br>
+            INTERNAL RECORD<br>
+            CASE: SCP-458
+        </div>
+
+        <div class="doc-meta-right">
+            SCP-458-LAB-REL-02<br>
+            REV. 04<br>
+            STATUS: COMPLETED
+        </div>
+    </div>
+
+    <h1 class="document-title">
+        Relatório de Análise<br>
+        Laboratorial — SCP-458
+    </h1>
+
+    <div class="document-subtitle">
+        Análise laboratorial das amostras de SCP-458
+    </div>
+
+    <div class="rule"></div>
+
+    <div class="metadata">
+
+        <div class="meta-item">
+            <div class="meta-label">
+                Pesquisador responsável
+            </div>
+
+            <div class="meta-value">
+                Kade Connors
+            </div>
+        </div>
+
+        <div class="meta-item">
+            <div class="meta-label">
+                Cargo
+            </div>
+
+            <div class="meta-value">
+                Pesquisador Júnior
+            </div>
+        </div>
+
+        <div class="meta-item">
+            <div class="meta-label">
+                Local
+            </div>
+
+            <div class="meta-value">
+                Site-22
+            </div>
+        </div>
+
+        <div class="meta-item">
+            <div class="meta-label">
+                Referência
+            </div>
+
+            <div class="meta-value">
+                SCP-458-RELATÓRIO-1-1
+            </div>
+        </div>
+
+    </div>
+
+    <div class="content">
+
+        <h2>Objetivo</h2>
+
+        <p>
+            Determinar a composição dos materiais produzidos pelo SCP-458
+            após a solicitação de uma pizza dividida entre tungstênio
+            e titânio. O objetivo principal é verificar se os metais
+            estão presentes em toda a estrutura do objeto, incluindo
+            a base, as bordas e a cobertura.
+        </p>
+
+        <p>
+            Uma amostra da pizza de frango com catupiry solicitada ao
+            final do teste foi separada para servir como controle.
+            Nesse caso, a intenção não era investigar a presença de
+            metais, mas confirmar que o SCP-458 continuava produzindo
+            uma pizza alimentar convencional quando recebia um pedido comum.
+        </p>
+
+        <h2>Amostra A — Pizza metálica</h2>
+
+        <p>
+            <strong>Identificação:</strong> SCP-458-A
+        </p>
+
+        <p>
+            <strong>Pedido original:</strong> Pizza dividida entre
+            tungstênio e titânio
+        </p>
+
+        <p>
+            <strong>Método de análise:</strong> Fluorescência de raios X
+            (XRF) e inspeção das amostras coletadas.
+        </p>
+
+        <h2>1. Metade de tungstênio</h2>
+
+        <p>
+            Foram coletadas amostras da base, das bordas e da cobertura
+            da metade correspondente ao tungstênio.
+        </p>
+
+        <p>
+            A análise identificou tungstênio como elemento predominante
+            nas três regiões examinadas. Os resultados foram consistentes
+            entre as amostras, sem evidências de que o metal estivesse
+            restrito à superfície externa.
+        </p>
+
+        <p>
+            A cobertura, que ocuparia a posição do queijo em uma pizza
+            convencional, apresentou a mesma predominância de tungstênio
+            encontrada na base e nas bordas. Não foram identificados
+            indícios relevantes de que essa região fosse composta por
+            um ingrediente alimentar separado.
+        </p>
+
+        <p>
+            Os resultados indicam que a cobertura não é queijo convencional
+            colocado sobre uma base metálica. Ela é constituída
+            predominantemente pelo mesmo metal que forma o restante
+            dessa metade.
+        </p>
+
+        <h2>2. Metade de titânio</h2>
+
+        <p>
+            O mesmo procedimento foi realizado na metade correspondente
+            ao titânio.
+        </p>
+
+        <p>
+            As amostras da base, das bordas e da cobertura apresentaram
+            predominância de titânio. A composição permaneceu consistente
+            entre as regiões examinadas, sem indicação de que o metal
+            estivesse limitado à superfície.
+        </p>
+
+        <p>
+            A cobertura apresentou composição compatível com a da base
+            e das bordas dessa metade. Não foram encontrados indícios
+            relevantes de ingredientes alimentares convencionais nas
+            amostras analisadas.
+        </p>
+
+        <p>
+            Assim como no lado de tungstênio, a cobertura é constituída
+            predominantemente pelo metal correspondente àquela metade.
+        </p>
+
+        <h2>3. Separação entre os materiais</h2>
+
+        <p>
+            A região de transição entre as duas metades foi examinada
+            separadamente.
+        </p>
+
+        <p>
+            Os resultados demonstraram uma mudança clara na composição
+            elementar entre a região rica em tungstênio e a região rica
+            em titânio. Os elementos não estavam distribuídos uniformemente
+            por toda a pizza.
+        </p>
+
+        <p>
+            Isso indica que o SCP-458 produziu duas regiões materialmente
+            distintas dentro do mesmo objeto, respeitando a divisão
+            especificada no pedido.
+        </p>
+
+        <p>
+            A composição observada é compatível com uma metade
+            predominantemente constituída por tungstênio e outra
+            predominantemente constituída por titânio. Não há evidência,
+            nas regiões analisadas, de que o objeto seja apenas uma pizza
+            convencional revestida de metal.
+        </p>
+
+        <h2>4. Pureza e limitações</h2>
+
+        <p>
+            Embora o tungstênio e o titânio tenham sido identificados
+            como os elementos predominantes nas respectivas regiões,
+            a análise realizada não permite declarar que os materiais
+            sejam completamente puros.
+        </p>
+
+        <p>
+            A fluorescência de raios X identifica elementos presentes
+            nas amostras, mas não determina, sozinha, todas as propriedades
+            físicas ou a estrutura microscópica dos materiais. A presença
+            de elementos-traço e possíveis diferenças de composição em
+            regiões não amostradas ainda precisam ser investigadas.
+        </p>
+
+        <p>
+            Recomendo análises complementares para determinar a pureza,
+            a densidade e as propriedades mecânicas de cada metade.
+        </p>
+
+        <h2>Amostra B — Pizza de frango com catupiry</h2>
+
+        <p>
+            <strong>Identificação:</strong> SCP-458-B
+        </p>
+
+        <p>
+            <strong>Pedido original:</strong> Pizza de frango com catupiry
+        </p>
+
+        <p>
+            <strong>Origem:</strong> Pizza que eu peguei no final do teste.
+        </p>
+
+
+        </p>
+
+        <h2>1. Inspeção e verificação</h2>
+
+        <p>
+            Um pedaço da pizza de frango com catupiry foi separado para
+            verificar se o SCP-458 havia produzido um alimento convencional
+            em resposta a um pedido comum.
+        </p>
+
+        <p>
+            A amostra apresentou massa, frango e catupiry, com aparência
+            e textura compatíveis com uma pizza alimentar. Não foram
+            observadas alterações visíveis que justificassem uma
+            investigação adicional naquele momento.
+        </p>
+
+        <p>
+            A amostra cumpriu sua finalidade como controle: o SCP-458
+            produziu uma pizza convencional quando solicitado, em contraste
+            com a estrutura metálica obtida no pedido anterior.
+        </p>
+
+        <p>
+            Não foi realizada uma análise química detalhada dessa amostra,
+            pois não havia motivo para investigar sua composição elementar.
+            O objetivo era confirmar a natureza alimentar do produto,
+            não procurar metais em uma pizza de frango com catupiry.
+        </p>
+
+        <div class="note">
+            Pelo menos essa parte do procedimento foi simples.
+        </div>
+
+        <h2>Conclusão</h2>
+
+        <p>
+            A análise da amostra SCP-458-A identificou predominância
+            de tungstênio em uma metade da pizza e de titânio na outra.
+            A composição foi consistente entre as amostras coletadas
+            da base, das bordas e da cobertura de cada região.
+        </p>
+
+        <p>
+            A cobertura de ambas as metades é constituída predominantemente
+            pelo mesmo metal presente no restante da respectiva região.
+            Portanto, os resultados não sustentam a hipótese de que o
+            SCP-458 tenha produzido uma pizza alimentar com um revestimento
+            metálico superficial.
+        </p>
+
+        <p>
+            A amostra SCP-458-B confirmou que o SCP-458 também consegue
+            produzir uma pizza alimentar convencional a partir de um
+            pedido comum. Sua função no procedimento foi exclusivamente
+            a de controle.
+        </p>
+
+        <p>
+            Os resultados sustentam a hipótese de que o SCP-458 consegue
+            produzir objetos constituídos pelos materiais solicitados,
+            e não apenas imitar sua aparência. Contudo, a pureza dos
+            metais e suas propriedades físicas ainda precisam ser
+            determinadas antes de considerar a anomalia uma fonte
+            confiável de materiais industriais.
+        </p>
+
+        <div class="result">
+
+            <div class="result-head">
+                <span>
+                    LABORATORY RESULT
+                </span>
+
+                <span>
+                    SCP-458-LAB-REL-02
+                </span>
+            </div>
+
+            <div class="result-row">
+                <span>
+                    AMOSTRA A — TUNGSTÊNIO
+                </span>
+
+                <span>
+                    Predominância de tungstênio confirmada na base,
+                    nas bordas e na cobertura da primeira metade.
+                </span>
+            </div>
+
+            <div class="result-row">
+                <span>
+                    AMOSTRA A — TITÂNIO
+                </span>
+
+                <span>
+                    Predominância de titânio confirmada na base,
+                    nas bordas e na cobertura da segunda metade.
+                </span>
+            </div>
+
+            <div class="result-row">
+                <span>
+                    AMOSTRA B — FRANGO COM CATUPIRY
+                </span>
+
+                <span>
+                    Pizza alimentar convencional confirmada por inspeção.
+                    Utilizada como controle.
+                </span>
+            </div>
+
+            <div class="result-row">
+                <span>
+                    RESULTADO GERAL
+                </span>
+
+                <span>
+                    A composição das regiões examinadas da pizza metálica
+                    corresponde aos materiais solicitados.
+                </span>
+            </div>
+
+            <div class="result-row">
+                <span>
+                    PRÓXIMO PASSO
+                </span>
+
+                <span>
+                    Determinar a pureza dos metais e investigar as
+                    propriedades físicas dos materiais produzidos
+                    pelo SCP-458.
+                </span>
+            </div>
+
+        </div>
+
+        <div class="signature">
+            <div class="signature-name">
+                Kade Connors
+            </div>
+
+            <div class="signature-meta">
+                SITE-22 · SCIENTIFIC DEPARTMENT<br>
+                JUNIOR RESEARCHER
+            </div>
+        </div>
+
+    </div>
+
+    <div class="page-number">
+        02 / 02
+    </div>
+
+</div>
+</article>
+
+</main>
+
+<script>
+function updateClock() {
+    const now = new Date();
+
+    const h = String(now.getHours()).padStart(2, "0");
+    const m = String(now.getMinutes()).padStart(2, "0");
+    const s = String(now.getSeconds()).padStart(2, "0");
+
+    document.getElementById("clock").textContent =
+        `${h}:${m}:${s}`;
+}
+
+updateClock();
+setInterval(updateClock, 1000);
+
+function scrollToDoc(id) {
+    const element = document.getElementById(id);
+
+    if (!element) return;
+
+    element.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
+const archiveFiles =
+    document.querySelectorAll(".archive-file");
+
+const documents =
+    document.querySelectorAll(".document");
+
+const observer = new IntersectionObserver(
+    entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+
+            const id = entry.target.id;
+
+            archiveFiles.forEach(file => {
+                file.classList.toggle(
+                    "active",
+                    file.dataset.target === id
+                );
+            });
+        });
+    },
+    {
+        threshold: 0.25
+    }
+);
+
+documents.forEach(document => {
+    observer.observe(document);
+});
+</script>
+
+</body>
+</html>
